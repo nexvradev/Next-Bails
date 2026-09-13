@@ -110,44 +110,30 @@ The v7.4.0 additions are typed as well: `FetchWaWebVersionResult`,
 
 ## Install
 
+Install directly from GitHub — no build step required:
+
 ```bash
 # npm
-npm install @nexvradev/next-bails
+npm install github:nexvradev/Next-Bails
 
 # pnpm
-pnpm add @nexvradev/next-bails
+pnpm add github:nexvradev/Next-Bails
 
 # Yarn
-yarn add @nexvradev/next-bails
+yarn add https://github.com/nexvradev/Next-Bails.git
 
 # Bun
-bun add @nexvradev/next-bails
-
-# Deno (npm specifier, Node compat)
-#   in your code:  import makeWASocket from "npm:@nexvradev/next-bails"
+bun add github:nexvradev/Next-Bails
 ```
 
-### Install directly from GitHub
-
-The package also installs straight from the GitHub repository — no registry publish required:
+Or add directly to your `package.json`:
 
 ```jsonc
-// package.json
 {
   "dependencies": {
-    "@nexvradev/next-bails": "github:nexvradev/Next-Bails"          // latest master
-    // "@nexvradev/next-bails": "github:nexvradev/Next-Bails#v1.0.0" // pinned release tag
-    // "@nexvradev/next-bails": "github:nexvradev/Next-Bails#semver:^1.0.0" // semver range against tags
+    "@nexvradev/next-bails": "github:nexvradev/Next-Bails"
   }
 }
-```
-
-```bash
-# or via the npm/pnpm/yarn shorthand
-npm install nexvradev/Next-Bails
-pnpm add github:nexvradev/Next-Bails
-yarn add @nexvradev/next-bails@github:nexvradev/Next-Bails
-bun add github:nexvradev/Next-Bails
 ```
 
 The built `lib/` (ESM + CJS + `.d.ts`) is committed to the repo, so no build step runs on install. Your code keeps using the scoped package name:
