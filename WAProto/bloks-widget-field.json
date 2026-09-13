@@ -1,0 +1,11 @@
+{
+  "_comment": "Nomor field 'bloksWidget' di dalam message InteractiveMessage. Kalau widget AI (im_a2ui) tidak ter-render di HP, ganti angka ini lalu jalankan: node scripts/patch-bloks-widget.mjs && (cd WAProto && npx pbjs -t static-module --no-beautify -w es6 --no-bundle --no-delimited --no-verify --no-comments -o ./index.js ./WAProto.proto && node ./fix-imports.js) && npm run build && npm test",
+  "field": 17,
+  "history": [
+    {
+      "field": 17,
+      "since": "2026-08-30",
+      "note": "nilai awal; field 1-16 & oneof 4-7 sudah terpakai"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "next-bails",
+  "version": "1.0.0",
+  "description": "Next-Bails — Custom WhatsApp Web Library with Interactive Flow Buttons, RichResponse & Modern Core",
+  "type": "module",
+  "main": "lib/index.cjs",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./WAProto": "./WAProto/index.js",
+    "./WAProto/*": "./WAProto/*",
+    "./*": "./*"
+  },
+  "keywords": [
+    "next-bails",
+    "baileys",
+    "whatsapp",
+    "whatsapp-api",
+    "interactive-buttons",
+    "native-flow",
+    "rich-response",
+    "nexvra"
+  ],
+  "author": "Nexvra Digital",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexvradev/next-bails.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nexvradev/next-bails/issues"
+  },
+  "homepage": "https://github.com/nexvradev/next-bails#readme",
+  "files": [
+    "lib/",
+    "WAProto/"
+  ],
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@cacheable/node-cache": "^1.4.0",
+    "@hapi/boom": "^9.1.3",
+    "async-mutex": "^0.5.0",
+    "axios": "^1.6.0",
+    "fflate": "^0.8.3",
+    "jimp": "^0.22.12",
+    "libphonenumber-js": "^1.10.20",
+    "libsignal": "^6.0.0",
+    "lodash": "^4.17.21",
+    "lru-cache": "^11.1.0",
+    "music-metadata": "^7.12.3",
+    "p-queue": "^9.0.0",
+    "pino": "^9.6.0",
+    "protobufjs": "^6.11.3",
+    "uuid": "^10.0.0",
+    "ws": "^8.13.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
