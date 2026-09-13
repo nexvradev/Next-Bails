@@ -1,44 +1,44 @@
-﻿# @nexvradev/next-bails
+# @nexvradev/next-bails
 
-> A productionâ€‘ready, dependencyâ€‘light **WhatsApp Web library** â€” a hardened, fullyâ€‘typed **dual ESM/CJS** build of [Baileys](https://github.com/WhiskeySockets/Baileys) (v7 line).
+> A production‑ready, dependency‑light **WhatsApp Web library** — a hardened, fully‑typed **dual ESM/CJS** build of [Baileys](https://github.com/WhiskeySockets/Baileys) (v7 line).
 >
-> ðŸ’¬ **Note:** _Baileys is not affiliated with WhatsApp or Meta in any way._
+> 💬 **Note:** _Baileys is not affiliated with WhatsApp or Meta in any way._
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Node >=20](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](#compatibility)
 [![TypeScript](https://img.shields.io/badge/types-included-3178c6.svg)](#typescript)
 [![Zero deps runtime: dual build](https://img.shields.io/badge/dual-ESM%20%2B%20CJS-informational)](#compatibility)
 
-`@nexvradev/next-bails` lets you build fullâ€‘featured **WhatsApp bots, integrations and automations** in pure JavaScript/TypeScript, without a browser. It is the runtime of the wellâ€‘known `Baileys` project, packaged for **reliability, performance and compatibility**:
+`@nexvradev/next-bails` lets you build full‑featured **WhatsApp bots, integrations and automations** in pure JavaScript/TypeScript, without a browser. It is the runtime of the well‑known `Baileys` project, packaged for **reliability, performance and compatibility**:
 
-- âœ… **Dual build** â€“ works with `import` *and* `require` out of the box (no dualâ€‘package hazard).
-- âœ… **Firstâ€‘class TypeScript** â€“ complete `.d.ts` for the whole public API; `tsc` reports **0 errors**.
-- âœ… **Hardened for production** â€“ zero consoleâ€‘noise lint, defensive parsers, retry/timeout/validation helpers.
-- âœ… **Every current WhatsApp message type** supported for send/parse/serialize â€” schemaâ€‘driven, futureâ€‘proof.
-- âœ… **Interactive messages** â€” buttons, lists, templates, native flows and carousels built straight from `sendMessage()` content.
-- âœ… **Message wrapper flags** â€” `viewOnceV2`, `ephemeral`, `spoiler`, `groupStatus`, `isLottie`, `interactiveAsTemplate`, `externalAdReply`, `raw`, plus the AI/biz labels (`ai`, `secureMetaServiceLabel`).
-- âœ… **Inâ€‘memory store** â€” the beloved `makeInMemoryStore()` is back, fully typed.
-- âœ… **Clean, reproducible build** with a green test suite (**144 tests**) covering the codec, crypto, events, interactive builders, the version manager, the reconnect manager and every message type.
-- âœ… **Connection & pairing bugs fixed** â€” the six open upstream issues that make bots drop or refuse to pair are patched *and* regressionâ€‘tested (see below).
+- ✅ **Dual build** – works with `import` *and* `require` out of the box (no dual‑package hazard).
+- ✅ **First‑class TypeScript** – complete `.d.ts` for the whole public API; `tsc` reports **0 errors**.
+- ✅ **Hardened for production** – zero console‑noise lint, defensive parsers, retry/timeout/validation helpers.
+- ✅ **Every current WhatsApp message type** supported for send/parse/serialize — schema‑driven, future‑proof.
+- ✅ **Interactive messages** — buttons, lists, templates, native flows and carousels built straight from `sendMessage()` content.
+- ✅ **Message wrapper flags** — `viewOnceV2`, `ephemeral`, `spoiler`, `groupStatus`, `isLottie`, `interactiveAsTemplate`, `externalAdReply`, `raw`, plus the AI/biz labels (`ai`, `secureMetaServiceLabel`).
+- ✅ **In‑memory store** — the beloved `makeInMemoryStore()` is back, fully typed.
+- ✅ **Clean, reproducible build** with a green test suite (**144 tests**) covering the codec, crypto, events, interactive builders, the version manager, the reconnect manager and every message type.
+- ✅ **Connection & pairing bugs fixed** — the six open upstream issues that make bots drop or refuse to pair are patched *and* regression‑tested (see below).
 
 ### Why this fork exists
 
 Upstream Baileys moves fast, and the failures people hit in production are
-rarely exotic â€” they are the handful of open issues around **connections that
+rarely exotic — they are the handful of open issues around **connections that
 die on reconnect** and **pairing that never completes**. This fork starts from
-upstream (`7.0.0-rc13` runtime â†’ synced with `rc14` + `master`) and fixes them,
+upstream (`7.0.0-rc13` runtime → synced with `rc14` + `master`) and fixes them,
 with tests that prove it:
 
 | Upstream issue | What breaks | Status here |
 | -------------- | ----------- | ----------- |
-| [#2777](https://github.com/WhiskeySockets/Baileys/issues/2777) | Reconnect falls back to an outdated WA Web version â†’ **endless `408` loop** | âœ… monotonic version + persisted cache |
-| [#2737](https://github.com/WhiskeySockets/Baileys/issues/2737) | QR scanned, phone reports *â€œCouldnâ€™t link deviceâ€*, `pair-success` never fires | âœ… `companion_reg_refresh` handled (adv secret rotated, QR reâ€‘rendered without spending a ref) |
-| [#2512](https://github.com/WhiskeySockets/Baileys/issues/2512) | `requestPairingCode()` â†’ **`stream:error 515`** | âœ… number normalisation, singleâ€‘flight, handshake wait, rollback on failure |
-| [#2741](https://github.com/WhiskeySockets/Baileys/pull/2741) | Windows clients rejected at handshake (`WIN32` retired) | âœ… advertises `WIN_HYBRID` |
-| [#2784](https://github.com/WhiskeySockets/Baileys/issues/2784) | `Cannot destructure property 'content'` **kills the process** | âœ… guarded `query()` results, faultâ€‘isolated init queries |
-| [#2784](https://github.com/WhiskeySockets/Baileys/issues/2784) | Preâ€‘key upload retries a dead socket forever | âœ… circuit breaker |
+| [#2777](https://github.com/WhiskeySockets/Baileys/issues/2777) | Reconnect falls back to an outdated WA Web version → **endless `408` loop** | ✅ monotonic version + persisted cache |
+| [#2737](https://github.com/WhiskeySockets/Baileys/issues/2737) | QR scanned, phone reports *“Couldn’t link device”*, `pair-success` never fires | ✅ `companion_reg_refresh` handled (adv secret rotated, QR re‑rendered without spending a ref) |
+| [#2512](https://github.com/WhiskeySockets/Baileys/issues/2512) | `requestPairingCode()` → **`stream:error 515`** | ✅ number normalisation, single‑flight, handshake wait, rollback on failure |
+| [#2741](https://github.com/WhiskeySockets/Baileys/pull/2741) | Windows clients rejected at handshake (`WIN32` retired) | ✅ advertises `WIN_HYBRID` |
+| [#2784](https://github.com/WhiskeySockets/Baileys/issues/2784) | `Cannot destructure property 'content'` **kills the process** | ✅ guarded `query()` results, fault‑isolated init queries |
+| [#2784](https://github.com/WhiskeySockets/Baileys/issues/2784) | Pre‑key upload retries a dead socket forever | ✅ circuit breaker |
 
-Full technical writeâ€‘up: [`docs/BUGFIXES.md`](./docs/BUGFIXES.md).
+Full technical write‑up: [`docs/BUGFIXES.md`](./docs/BUGFIXES.md).
 
 ---
 
@@ -56,7 +56,7 @@ Full technical writeâ€‘up: [`docs/BUGFIXES.md`](./docs/BUGFIXES.md).
 - [Message wrapper flags](#message-wrapper-flags)
 - [Store & lookup helpers](#store--lookup-helpers)
 - [Receiving messages](#receiving-messages)
-- [Messageâ€‘type coverage](#message-type-coverage)
+- [Message‑type coverage](#message-type-coverage)
 - [Event handling](#event-handling)
 - [Connection configuration](#connection-configuration)
 - [Reliability & error handling](#reliability--error-handling)
@@ -72,18 +72,18 @@ Full technical writeâ€‘up: [`docs/BUGFIXES.md`](./docs/BUGFIXES.md).
 
 | Runtime / system                             | Status  | Notes                                             |
 | -------------------------------------------- | ------- | ------------------------------------------------- |
-| **Node.js 20 LTS / 22 LTS**                  | âœ…      | `engines.node: ">=20.0.0"`, fully tested          |
-| **CommonJS** (`require`)                     | âœ…      | `lib/index.cjs` bundle, `main`/`exports.require`  |
-| **ES Modules** (`import`)                    | âœ…      | `lib/index.js`, `module`/`exports.import`         |
-| **TypeScript**                               | âœ…      | Shipâ€‘inâ€‘box `.d.ts`; `skipLibCheck:false`â€‘safe    |
-| **Bun**                                      | âœ…      | Runs the ESM build directly                       |
-| **Deno** (with Node compatibility)           | âœ…      | Works via `npm:` specifier + Node compat          |
-| **Windows / macOS / Linux**                  | âœ…      | No native build steps required                    |
+| **Node.js 20 LTS / 22 LTS**                  | ✅      | `engines.node: ">=20.0.0"`, fully tested          |
+| **CommonJS** (`require`)                     | ✅      | `lib/index.cjs` bundle, `main`/`exports.require`  |
+| **ES Modules** (`import`)                    | ✅      | `lib/index.js`, `module`/`exports.import`         |
+| **TypeScript**                               | ✅      | Ship‑in‑box `.d.ts`; `skipLibCheck:false`‑safe    |
+| **Bun**                                      | ✅      | Runs the ESM build directly                       |
+| **Deno** (with Node compatibility)           | ✅      | Works via `npm:` specifier + Node compat          |
+| **Windows / macOS / Linux**                  | ✅      | No native build steps required                    |
 ---
 
 ## TypeScript
 
-Type declarations ship with the package â€” there is nothing extra to install and
+Type declarations ship with the package — there is nothing extra to install and
 no `@types/*` to chase. Every public function, event and message content type is
 described in `lib/index.d.ts`, and this repository is type-checked with
 `strict: true`.
@@ -92,7 +92,7 @@ described in `lib/index.d.ts`, and this repository is type-checked with
 import makeWASocket from '@nexvradev/next-bails'
 import type { WASocket, AnyMessageContent, ConnectionState } from '@nexvradev/next-bails'
 
-const sock: WASocket = makeWASocket({ /* â€¦ */ })
+const sock: WASocket = makeWASocket({ /* … */ })
 
 sock.ev.on('connection.update', (update: Partial<ConnectionState>) => {
   if (update.connection === 'open') console.log('connected')
@@ -129,25 +129,25 @@ bun add @nexvradev/next-bails
 
 ### Install directly from GitHub
 
-The package also installs straight from the GitHub repository â€” no registry publish required:
+The package also installs straight from the GitHub repository — no registry publish required:
 
 ```jsonc
 // package.json
 {
   "dependencies": {
-    "@nexvradev/next-bails": "github:chaeulso/baileys"          // latest master
-    // "@nexvradev/next-bails": "github:chaeulso/baileys#v7.1.0" // pinned release tag
-    // "@nexvradev/next-bails": "github:chaeulso/baileys#semver:^7.1.0" // semver range against tags
+    "@nexvradev/next-bails": "github:nexvradev/Next-Bails"          // latest master
+    // "@nexvradev/next-bails": "github:nexvradev/Next-Bails#v1.0.0" // pinned release tag
+    // "@nexvradev/next-bails": "github:nexvradev/Next-Bails#semver:^1.0.0" // semver range against tags
   }
 }
 ```
 
 ```bash
 # or via the npm/pnpm/yarn shorthand
-npm install chaeulso/baileys
-pnpm add github:chaeulso/baileys
-yarn add @nexvradev/next-bails@github:chaeulso/baileys
-bun add github:chaeulso/baileys
+npm install nexvradev/Next-Bails
+pnpm add github:nexvradev/Next-Bails
+yarn add @nexvradev/next-bails@github:nexvradev/Next-Bails
+bun add github:nexvradev/Next-Bails
 ```
 
 The built `lib/` (ESM + CJS + `.d.ts`) is committed to the repo, so no build step runs on install. Your code keeps using the scoped package name:
@@ -157,7 +157,7 @@ import makeWASocket from '@nexvradev/next-bails'   // ESM / TS
 const { default: makeWASocket } = require('@nexvradev/next-bails') // CJS
 ```
 
-> The CJS bundle is selfâ€‘contained except for three runtime deps (`ws`, `libsignal`, `pino`'s `supports-color`); the ESM build imports the same few dependencies. Everything else is bundled.
+> The CJS bundle is self‑contained except for three runtime deps (`ws`, `libsignal`, `pino`'s `supports-color`); the ESM build imports the same few dependencies. Everything else is bundled.
 
 ---
 
@@ -192,7 +192,7 @@ const startBot = async () => {
       console.log('connection closed, reconnecting:', shouldReconnect)
       if (shouldReconnect) startBot()
     } else if (connection === 'open') {
-      console.log('âœ” connected')
+      console.log('✔ connected')
     }
   })
 
@@ -200,7 +200,7 @@ const startBot = async () => {
     if (type !== 'notify') return
     const m = messages[0]
     if (!m.message || m.key.fromMe) return
-    await sock.sendMessage(m.key.remoteJid, { text: 'ðŸ¤– hello!' })
+    await sock.sendMessage(m.key.remoteJid, { text: '🤖 hello!' })
   })
 }
 
@@ -215,16 +215,16 @@ const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = requi
 // ... identical body to the ESM example
 ```
 
-That's a complete, autoâ€‘reconnecting echo bot. For a production-grade reconnect
+That's a complete, auto‑reconnecting echo bot. For a production-grade reconnect
 loop (backoff, no retry after logout, version refresh on `408`), see
-[Connection reliability](#connection-reliability-v740) â€” swapping in
+[Connection reliability](#connection-reliability-v740) — swapping in
 `createReconnectManager()` is about ten lines.
 
 ---
 
 ## Authentication
 
-### Option 1 â€” QR code (most common)
+### Option 1 — QR code (most common)
 
 `printQRInTerminal: true` prints the QR to stdout. To handle the QR yourself (e.g. render it on a web dashboard), listen to `connection.update`:
 
@@ -237,13 +237,13 @@ sock.ev.on('connection.update', ({ qr }) => {
 })
 ```
 
-### Option 2 â€” Pairing code (no QR, mobile-friendly)
+### Option 2 — Pairing code (no QR, mobile-friendly)
 
 ```ts
 const sock = makeWASocket({ version, auth: state })
 
 if (!sock.authState.creds.registered) {
-  // any of these are accepted â€” the number is normalised for you
+  // any of these are accepted — the number is normalised for you
   const code = await sock.requestPairingCode('+1 555 123 4567')
   console.log('Pairing code:', code)
 }
@@ -251,7 +251,7 @@ if (!sock.authState.creds.registered) {
 
 `requestPairingCode()` is hardened against the failure modes reported in
 [WhiskeySockets#2512](https://github.com/WhiskeySockets/Baileys/issues/2512)
-(where the phone answers *â€œCouldnâ€™t link deviceâ€* and the socket dies with
+(where the phone answers *“Couldn’t link device”* and the socket dies with
 `stream:error 515`):
 
 ```ts
@@ -264,11 +264,11 @@ requestPairingCode(
 
 | Behaviour | Detail |
 | --------- | ------ |
-| **Number normalisation** | `+1 (555) 010-9999`, `15550109999`, `0015550109999` all work. With `{ defaultCountryCode: '62' }`, `0812â€¦` becomes `62812â€¦`. Anything outside E.164 length is rejected **before** a request reaches WhatsApp. |
-| **Singleâ€‘flight** | Calling it twice on one connection returns the code already issued â€” bots that ask inside `connection.update` no longer fire conflicting requests. A *failed* request frees the slot, so you can retry with a corrected number. |
+| **Number normalisation** | `+1 (555) 010-9999`, `15550109999`, `0015550109999` all work. With `{ defaultCountryCode: '62' }`, `0812…` becomes `62812…`. Anything outside E.164 length is rejected **before** a request reaches WhatsApp. |
+| **Single‑flight** | Calling it twice on one connection returns the code already issued — bots that ask inside `connection.update` no longer fire conflicting requests. A *failed* request frees the slot, so you can retry with a corrected number. |
 | **Handshake aware** | It waits for the noise handshake instead of throwing `Connection Closed` when called straight after `makeWASocket()`. |
-| **Clean rollback** | If pairing never reaches `pair-success`, the provisional `creds.me` / `creds.pairingCode` are removed, so the next connect registers cleanly â€” no more â€œdelete the session folder and try againâ€. |
-| **QR still works** | `companion_reg_refresh` (the notification WhatsApp sends after a scan) rotates the adv secret and reâ€‘renders the QR **without consuming another ref** â€” [WhiskeySockets#2737](https://github.com/WhiskeySockets/Baileys/issues/2737). |
+| **Clean rollback** | If pairing never reaches `pair-success`, the provisional `creds.me` / `creds.pairingCode` are removed, so the next connect registers cleanly — no more “delete the session folder and try again”. |
+| **QR still works** | `companion_reg_refresh` (the notification WhatsApp sends after a scan) rotates the adv secret and re‑renders the QR **without consuming another ref** — [WhiskeySockets#2737](https://github.com/WhiskeySockets/Baileys/issues/2737). |
 
 Helper exports, if you want the pieces:
 
@@ -281,7 +281,7 @@ normalizePairingPhoneNumber('081234567890', { defaultCountryCode: '62' }) // '62
 
 ### Persisting & restoring credentials
 
-`useMultiFileAuthState` writes your session (creds + keys) to disk. Point it to the *same* folder to resume an existing session â€” no QR again.
+`useMultiFileAuthState` writes your session (creds + keys) to disk. Point it to the *same* folder to resume an existing session — no QR again.
 
 ```ts
 const { state, saveCreds } = await useMultiFileAuthState('./auth_info_baileys')
@@ -289,14 +289,14 @@ const { state, saveCreds } = await useMultiFileAuthState('./auth_info_baileys')
 sock.ev.on('creds.update', saveCreds)
 ```
 
-For serverless/multiâ€‘process setups, store the JSON of the `auth_info` folder in your DB and rehydrate it on boot (serialize with the included `BufferJSON`).
+For serverless/multi‑process setups, store the JSON of the `auth_info` folder in your DB and rehydrate it on boot (serialize with the included `BufferJSON`).
 
 ---
 
 ## Connection reliability (v7.4.0)
 
-Two things cause almost every â€œmy bot keeps disconnecting / canâ€™t pairâ€ report:
-an **outdated WhatsApp Web version**, and a **handâ€‘rolled reconnect loop**. Both
+Two things cause almost every “my bot keeps disconnecting / can’t pair” report:
+an **outdated WhatsApp Web version**, and a **hand‑rolled reconnect loop**. Both
 are now handled by the library.
 
 ### 1. A WA Web version that can never go backwards
@@ -306,21 +306,21 @@ import { resolveWaWebVersion, fetchLatestWaWebVersion } from '@nexvradev/next-ba
 
 // newest of: the persisted cache, a live fetch, and the packaged fallback
 const { version, source } = await resolveWaWebVersion({ cachePath: './session/wa-version.json' })
-// â†’ { version: [2, 3000, 1046341789], source: 'fetch' | 'cache' | 'fallback', isLatest }
+// → { version: [2, 3000, 1046341789], source: 'fetch' | 'cache' | 'fallback', isLatest }
 
 const sock = makeWASocket({ version, auth: state })
 ```
 
 Why this matters ([WhiskeySockets#2777](https://github.com/WhiskeySockets/Baileys/issues/2777)):
 the stock `fetchLatestWaWebVersion()` returns the **hardcoded** package constant
-whenever the fetch fails â€” and that constant is older than the version the
+whenever the fetch fails — and that constant is older than the version the
 server already accepted. The server answers `408`, the bot reconnects, falls
 back again, and loops forever:
 
 ```
-[Version] Fetch latest WA version success: v2.3000.1045716975   â† startup, fine
-Starting wa-service (WA v2.3000.1043857760, Latest: false)      â† reconnect, stale
-[WhatsApp] Connection closed. Status Code: 408                  â† forever
+[Version] Fetch latest WA version success: v2.3000.1045716975   ← startup, fine
+Starting wa-service (WA v2.3000.1043857760, Latest: false)      ← reconnect, stale
+[WhatsApp] Connection closed. Status Code: 408                  ← forever
 ```
 
 `fetchLatestWaWebVersion()` is also hardened: a **15 s timeout**, **2 retries**,
@@ -331,7 +331,7 @@ await fetchLatestWaWebVersion({
   timeoutMs: 15_000,
   retries: 2,
   allowDowngrade: false,   // never advertise an older revision than one that worked
-  fetchImpl: myFetch,      // injectable â€” useful behind a proxy
+  fetchImpl: myFetch,      // injectable — useful behind a proxy
   signal: controller.signal
 })
 ```
@@ -355,47 +355,47 @@ const manager = createReconnectManager({
   connect: ({ version: v }) =>
     makeWASocket({ auth: state, version: v ?? version, browser: Browsers.ubuntu('Chrome') }),
 
-  // runs for every socket the manager builds â€” wire your handlers here
+  // runs for every socket the manager builds — wire your handlers here
   onSocket: sock => {
     sock.ev.on('creds.update', saveCreds)
     sock.ev.on('messages.upsert', ({ messages }) => console.log(messages))
   },
 
-  // 408 â†’ refresh the WA Web version before retrying
+  // 408 → refresh the WA Web version before retrying
   versionProvider: async () => (await resolveWaWebVersion({ cachePath })).version,
 
-  baseDelayMs: 2_000,      // full-jitter exponential backoff, cappedâ€¦
-  maxDelayMs: 60_000,      // â€¦at 60s
+  baseDelayMs: 2_000,      // full-jitter exponential backoff, capped…
+  maxDelayMs: 60_000,      // …at 60s
   maxRetries: Infinity,
   onGiveUp: error => console.error('giving up:', error)
 })
 
-await manager.start()               // idempotent â€” never two sockets at once
-// manager.socket â†’ the live socket | await manager.stop()
+await manager.start()               // idempotent — never two sockets at once
+// manager.socket → the live socket | await manager.stop()
 ```
 
-What it gets right, and handâ€‘rolled loops usually donâ€™t:
+What it gets right, and hand‑rolled loops usually don’t:
 
 | Guard | Why |
 | ----- | --- |
-| **Fullâ€‘jitter exponential backoff** | no thundering herd against WhatsApp after an outage; no hammering until the number is limited |
-| **Never retries `loggedOut` (401), `forbidden` (403), `multideviceMismatch` (411)** | retrying a dead session is what turns â€œdevice logged outâ€ into a banned number |
+| **Full‑jitter exponential backoff** | no thundering herd against WhatsApp after an outage; no hammering until the number is limited |
+| **Never retries `loggedOut` (401), `forbidden` (403), `multideviceMismatch` (411)** | retrying a dead session is what turns “device logged out” into a banned number |
 | **Refreshes the version after a 408** | breaks the loop in #2777 |
-| **Reconnects immediately after `restartRequired` (515)** | the server sends 515 *on purpose* right after a successful pairing â€” backing off there is pointless |
-| **Singleâ€‘flight `start()`** | a 515 plus your own retry handler otherwise creates two sockets fighting over one auth state |
+| **Reconnects immediately after `restartRequired` (515)** | the server sends 515 *on purpose* right after a successful pairing — backing off there is pointless |
+| **Single‑flight `start()`** | a 515 plus your own retry handler otherwise creates two sockets fighting over one auth state |
 | **Reset on `connection: 'open'`** | the backoff counter restarts once you are actually connected |
 
-### 3. Disconnect code cheatâ€‘sheet
+### 3. Disconnect code cheat‑sheet
 
 | Code | `DisconnectReason` | Meaning | What to do |
 | ---- | ------------------ | ------- | ---------- |
 | 401 | `loggedOut` | Session invalidated (logged out from the phone, or the device was removed) | **Do not reconnect.** Delete the session and pair again |
 | 403 | `forbidden` | Account forbidden | Stop; investigate the account |
-| 408 | `connectionLost` / `timedOut` | Server closed the stream â€” often a stale client version | Reconnect **after refreshing the version** |
-| 411 | `multideviceMismatch` | Multiâ€‘device beta not joined on the phone | Stop; enable it on the phone |
+| 408 | `connectionLost` / `timedOut` | Server closed the stream — often a stale client version | Reconnect **after refreshing the version** |
+| 411 | `multideviceMismatch` | Multi‑device beta not joined on the phone | Stop; enable it on the phone |
 | 428 | `connectionClosed` | Normal close | Reconnect with backoff |
 | 440 | `connectionReplaced` | Another connection took over the same session | Stop the duplicate process |
-| 500 | `badSession` | Session rejected by the server | Reconnect if registered, else reâ€‘pair |
+| 500 | `badSession` | Session rejected by the server | Reconnect if registered, else re‑pair |
 | 503 | `unavailableService` | WhatsApp side is unavailable | Reconnect with backoff |
 | 515 | `restartRequired` | Expected right after a successful pairing | Reconnect immediately |
 
@@ -422,7 +422,7 @@ await sock.sendMessage(jid, { location: { degreesLatitude: -6.2, degreesLongitud
 await sock.sendMessage(jid, { liveLocation: { degreesLatitude: -6.2, degreesLongitude: 106.8, sequenceNumber: 0, timeOffset: 60 } })
 await sock.sendMessage(jid, { contacts: { displayName: 'Jane', contacts: [{ fullName: 'Jane Doe', waid: '1555' }] } })
 
-await sock.sendMessage(jid, { react: { text: 'ðŸ‘', key: msg.key } })                               // reaction
+await sock.sendMessage(jid, { react: { text: '👍', key: msg.key } })                               // reaction
 await sock.sendMessage(jid, { poll: { name: 'Fav color?', values: ['Red', 'Blue', 'Green'], selectableCount: 1 } })  // poll
 await sock.sendMessage(jid, { buttons: [ { buttonId: 'b1', buttonText: { displayText: 'Hi' }, type: 1 } ], text: 'pick', footer: 'f' }, { ephemeralExpiration: 604800 })
 await sock.sendMessage(jid, { orderMessage: { itemCount: 2, status: 'PENDING', surface: 1, message: 'thanks' } })
@@ -438,20 +438,20 @@ await sock.sendMessage(jid, { keep: msg.key, type: 1 })                    // ke
 await sock.sendMessage(jid, { pin: { key: msg.key, type: 1, time: 86400 } }) // pin for 24h
 ```
 
-**Disappearing / viewâ€‘once:**
+**Disappearing / view‑once:**
 
 ```ts
-await sock.sendMessage(jid, { text: 'selfâ€‘destruct' }, { ephemeralExpiration: 86400 })
+await sock.sendMessage(jid, { text: 'self‑destruct' }, { ephemeralExpiration: 86400 })
 await sock.sendMessage(jid, { image: { url: './x.jpg' }, viewOnce: true })
 ```
 
-> ðŸ“„ For the exhaustive, schemaâ€‘driven list (native flows, catalogs, newsletters, albums, status replies and more) see [`docs/MESSAGE-TYPES.md`](./docs/MESSAGE-TYPES.md).
+> 📄 For the exhaustive, schema‑driven list (native flows, catalogs, newsletters, albums, status replies and more) see [`docs/MESSAGE-TYPES.md`](./docs/MESSAGE-TYPES.md).
 
 ---
 
 ## Interactive messages
 
-Build every interactive shape directly from the content object of `sendMessage()` â€” no handâ€‘crafted proto required. The library prepares and uploads media headers for you and attaches the required `<biz>` stanza node automatically at send time.
+Build every interactive shape directly from the content object of `sendMessage()` — no hand‑crafted proto required. The library prepares and uploads media headers for you and attaches the required `<biz>` stanza node automatically at send time.
 
 ### Buttons (`buttonsMessage`)
 
@@ -464,7 +464,7 @@ await sock.sendMessage(jid, {
     { id: 'opt-2', text: 'Option 2' },
     // native-flow single_select shortcut (a list inside a button)
     {
-      text: 'Moreâ€¦',
+      text: 'More…',
       sections: [{ title: 'Section', rows: [{ title: 'Row A', id: 'a' }, { title: 'Row B', id: 'b' }] }]
     },
     // raw native-flow passthrough
@@ -473,7 +473,7 @@ await sock.sendMessage(jid, {
 })
 ```
 
-With a media header simply attach the media â€” the header type is inferred (`IMAGE` / `VIDEO` / `DOCUMENT`):
+With a media header simply attach the media — the header type is inferred (`IMAGE` / `VIDEO` / `DOCUMENT`):
 
 ```ts
 await sock.sendMessage(jid, {
@@ -520,9 +520,9 @@ await sock.sendMessage(jid, {
 
 ### Native flow (`interactiveMessage`)
 
-The most flexible builder. Each button is a shorthand that the library converts to a native-flow row: `{ id }` quickâ€‘reply, `{ copy }` copyâ€‘code, `{ url }` open link, `{ call }` dial, `{ sections }` option sheet â€” plus raw `{ name, buttonParamsJson }` rows. Optional `icon` (upperâ€‘cased automatically), `offerText` limitedâ€‘time banner, and `optionText` bottom sheet.
+The most flexible builder. Each button is a shorthand that the library converts to a native-flow row: `{ id }` quick‑reply, `{ copy }` copy‑code, `{ url }` open link, `{ call }` dial, `{ sections }` option sheet — plus raw `{ name, buttonParamsJson }` rows. Optional `icon` (upper‑cased automatically), `offerText` limited‑time banner, and `optionText` bottom sheet.
 
-**AI widget (`bloksWidget` / `im_a2ui`)** â€” a widget payload can ride along with the
+**AI widget (`bloksWidget` / `im_a2ui`)** — a widget payload can ride along with the
 native flow on the same message. `bloksWidget` is field **17** of `InteractiveMessage`
 and is deliberately *not* part of the `interactiveMessage` oneof, so both survive
 serialization together:
@@ -538,14 +538,14 @@ await sock.sendMessage(jid, {
 ```
 
 If the widget does not render on the phone, the field number is probably not the one
-WhatsApp currently uses â€” see [`docs/BLOKS-WIDGET.md`](./docs/BLOKS-WIDGET.md) for the
+WhatsApp currently uses — see [`docs/BLOKS-WIDGET.md`](./docs/BLOKS-WIDGET.md) for the
 one-command way to change it (`node scripts/patch-bloks-widget.mjs 21`).
 
 ```ts
 await sock.sendMessage(jid, {
   text: 'Your order is ready!',
   footer: 'Store bot',
-  offerText: 'ðŸ”¥ 20% off today',          // limited_time_offer banner (+ offerUrl/offerCode/offerExpiration)
+  offerText: '🔥 20% off today',          // limited_time_offer banner (+ offerUrl/offerCode/offerExpiration)
   optionText: 'See all options',          // bottom_sheet entry point
   nativeFlow: [
     { text: 'Copy code', copy: 'SALE20', icon: 'copy' },
@@ -565,7 +565,7 @@ await sock.sendMessage(jid, {
 })
 ```
 
-Media header rules: `image`, `video`, `document`, `location` or `product` â€” anything else is rejected with a clear `Invalid media type for interactive message header` error. Catalog headers use `{ bizJid }` (collection) or `{ shopSurface }` (storefront).
+Media header rules: `image`, `video`, `document`, `location` or `product` — anything else is rejected with a clear `Invalid media type for interactive message header` error. Catalog headers use `{ bizJid }` (collection) or `{ shopSurface }` (storefront).
 
 ### Carousel (`cards`)
 
@@ -591,15 +591,15 @@ await sock.sendMessage(jid, {
 })
 ```
 
-Card headers accept `image` / `video` / `product`; perâ€‘card `title`, `subtitle`, `footer`, `thumbnail` and `audioFooter` are supported. Topâ€‘level `text` / `footer` become the carousel body and footer.
+Card headers accept `image` / `video` / `product`; per‑card `title`, `subtitle`, `footer`, `thumbnail` and `audioFooter` are supported. Top‑level `text` / `footer` become the carousel body and footer.
 
-> ðŸ’¡ **Rendering caveat (as with every interactive type on WhatsApp):** delivery and rendering depend on the recipient's app version and surface; newsletter rendering also differs from private/group chats. Template messages currently render on WhatsApp Web/Desktop and iOS; on Android they appear in newsletters.
+> 💡 **Rendering caveat (as with every interactive type on WhatsApp):** delivery and rendering depend on the recipient's app version and surface; newsletter rendering also differs from private/group chats. Template messages currently render on WhatsApp Web/Desktop and iOS; on Android they appear in newsletters.
 
 ---
 
 ## Special content (v7.3.0)
 
-Everything below is built by `generateWAMessageContent` the moment you pass the field â€” no proto handâ€‘crafting.
+Everything below is built by `generateWAMessageContent` the moment you pass the field — no proto hand‑crafting.
 
 ### Flow reply (`interactiveResponseMessage`)
 
@@ -613,12 +613,12 @@ await sock.sendMessage(jid, {
 }, { quoted: msg })
 ```
 
-### Poll extras â€” quiz, result, update
+### Poll extras — quiz, result, update
 
 ```ts
 // quiz (newsletter only)
 await sock.sendMessage('12111@newsletter', {
-  poll: { name: 'ðŸ”¥ Quiz', values: ['Yes', 'No'], pollType: 1, correctAnswer: 'Yes' }
+  poll: { name: '🔥 Quiz', values: ['Yes', 'No'], pollType: 1, correctAnswer: 'Yes' }
 })
 
 // extra poll fields
@@ -631,7 +631,7 @@ await sock.sendMessage(jid, {
 
 // poll result snapshot
 await sock.sendMessage(jid, {
-  pollResult: { name: 'ðŸ“ Result', votes: [{ name: 'Nice', voteCount: 10 }, { name: 'Nah', voteCount: 2 }], pollType: 0 }
+  pollResult: { name: '📝 Result', votes: [{ name: 'Nice', voteCount: 10 }, { name: 'Nah', voteCount: 2 }], pollType: 0 }
 })
 
 // publish a vote (pollUpdateMessage) referencing a poll creation message
@@ -646,13 +646,13 @@ await sock.sendMessage(jid, {
 await sock.sendMessage(jid, { paymentInviteServiceType: 3 })   // payment invite card (1, 2, or 3)
 
 // attach a payment request to a text/sticker note
-await sock.sendMessage(jid, { text: 'ðŸ’³ please pay', requestPaymentFrom: '1555@s.whatsapp.net' })
+await sock.sendMessage(jid, { text: '💳 please pay', requestPaymentFrom: '1555@s.whatsapp.net' })
 
 // order card (neutral defaults, override any field; thumbnail is required)
-await sock.sendMessage(jid, { orderText: 'ðŸ›ï¸ Order', thumbnail: fs.readFileSync('./cat.jpg'), orderTitle: 'Ticket', totalAmount1000: 75000 })
+await sock.sendMessage(jid, { orderText: '🛍️ Order', thumbnail: fs.readFileSync('./cat.jpg'), orderTitle: 'Ticket', totalAmount1000: 75000 })
 
 // invoice with an image/pdf attachment
-await sock.sendMessage(jid, { image: { url: './inv.jpg' }, invoiceNote: 'ðŸ·ï¸ Invoice' })
+await sock.sendMessage(jid, { image: { url: './inv.jpg' }, invoiceNote: '🏷️ Invoice' })
 ```
 
 ### Keep chat (`keepInChatMessage`)
@@ -663,25 +663,25 @@ await sock.sendMessage(jid, { keep: msg.key, type: 1 })  // 2 to un-keep. Disapp
 
 ### Sticker pack (`stickerPackMessage`)
 
-> Up to **60** stickers per pack, each â‰¤ 1 MB after conversion. Nonâ€‘WebP inputs are converted through **sharp** or **@napi-rs/image** (`npm i @napi-rs/image`). Alreadyâ€‘WebP stickers are sent asâ€‘is; animation is detected automatically.
+> Up to **60** stickers per pack, each ≤ 1 MB after conversion. Non‑WebP inputs are converted through **sharp** or **@napi-rs/image** (`npm i @napi-rs/image`). Already‑WebP stickers are sent as‑is; animation is detected automatically.
 
 ```ts
 await sock.sendMessage(jid, {
   cover: { url: './cover.webp' },
   stickers: [
-    { data: { url: './a.webp' }, emojis: ['ðŸŽ‰'], accessibilityLabel: 'party' },
+    { data: { url: './a.webp' }, emojis: ['🎉'], accessibilityLabel: 'party' },
     { data: fs.readFileSync('./b.png') },
     { data: fs.readFileSync('./c.webp') }
   ],
-  name: 'ðŸ˜º Cat Pack',
-  publisher: '@chaeulso',
+  name: '😺 Cat Pack',
+  publisher: '@nexvradev',
   description: 'cats everywhere'
 })
 ```
 
 ### Rich response (code blocks / tables / citations)
 
-Sends `botForwardedMessage` with an AIâ€‘formatted body â€” the same surface WhatsApp's own AI messages use:
+Sends `botForwardedMessage` with an AI‑formatted body — the same surface WhatsApp's own AI messages use:
 
 ```ts
 await sock.sendMessage(jid, {
@@ -696,41 +696,41 @@ await sock.sendMessage(jid, {
 })
 ```
 
-Full control is available through `richResponse: RichResponseSubMessage[]` (text / code / table / inlineImage / latex / items â€¦).
+Full control is available through `richResponse: RichResponseSubMessage[]` (text / code / table / inlineImage / latex / items …).
 
 ---
 
 ## Message wrapper flags
 
-Flags you can combine with (almost) any content â€” the library wraps the built message for you. Order is handled internally (`spoiler` and `interactiveAsTemplate` are mutually exclusive, as are the viewâ€‘once variants and `isLottie`):
+Flags you can combine with (almost) any content — the library wraps the built message for you. Order is handled internally (`spoiler` and `interactiveAsTemplate` are mutually exclusive, as are the view‑once variants and `isLottie`):
 
 | Flag | Effect |
 | ---- | ------ |
 | `viewOnce` | wrap in `viewOnceMessage` |
 | `viewOnceV2` | wrap in `viewOnceMessageV2` (newer envelope) |
-| `viewOnceV2Extension` | wrap in `viewOnceMessageV2Extension` (voiceâ€‘note capable) |
+| `viewOnceV2Extension` | wrap in `viewOnceMessageV2Extension` (voice‑note capable) |
 | `ephemeral` | wrap in `ephemeralMessage` |
-| `spoiler` | set `contextInfo.isSpoiler` and wrap in `spoilerMessage` (revealâ€‘onâ€‘tap) |
+| `spoiler` | set `contextInfo.isSpoiler` and wrap in `spoilerMessage` (reveal‑on‑tap) |
 | `groupStatus` | set `contextInfo.isGroupStatus` and wrap in `groupStatusMessageV2` |
 | `isLottie` | wrap (sticker) content in `lottieStickerMessage` |
 | `interactiveAsTemplate` | wrap a built `interactiveMessage` into `templateMessage` |
-| `raw` | bypass content building entirely â€” object is relayed asâ€‘is |
+| `raw` | bypass content building entirely — object is relayed as‑is |
 | `ai` | render the message with the AI label (private chats only) |
-| `secureMetaServiceLabel` | forceâ€‘attach the biz attributes node |
+| `secureMetaServiceLabel` | force‑attach the biz attributes node |
 
 ```ts
 await sock.sendMessage(jid, { text: 'spoilers!', spoiler: true })
 await sock.sendMessage(jid, { image: { url: './x.jpg' }, caption: 'one view', viewOnceV2: true })
 await sock.sendMessage(jid, { audio: buf, ptt: true, viewOnceV2Extension: true })
-await sock.sendMessage(jid, { interactiveAsTemplate: true, nativeFlow: [/*â€¦*/], text: 'templated' })
+await sock.sendMessage(jid, { interactiveAsTemplate: true, nativeFlow: [/*…*/], text: 'templated' })
 
-// hand-shaped escape hatch â€” nothing is generated:
+// hand-shaped escape hatch — nothing is generated:
 await sock.sendMessage(jid, { raw: true, buttonsMessage: myHandBuiltButtons })
 ```
 
 ### `externalAdReply` shortcut
 
-Attach a WhatsApp linkâ€‘ad preview without handâ€‘building `contextInfo`:
+Attach a WhatsApp link‑ad preview without hand‑building `contextInfo`:
 
 ```ts
 await sock.sendMessage(jid, {
@@ -738,7 +738,7 @@ await sock.sendMessage(jid, {
   externalAdReply: {
     title: 'Awesome product',
     body: 'Check this out',
-    url: 'https://shop.example/item',     // required â€” there is intentionally no default URL
+    url: 'https://shop.example/item',     // required — there is intentionally no default URL
     thumbnail: fs.readFileSync('./thumb.jpg'),  // must be a Buffer
     largeThumbnail: true
   }
@@ -751,7 +751,7 @@ await sock.sendMessage(jid, {
 
 ### `makeInMemoryStore()`
 
-The classic inâ€‘memory store is back â€” a dropâ€‘in replacement for the Baileys v6 store, fully typed and consoleâ€‘quiet:
+The classic in‑memory store is back — a drop‑in replacement for the Baileys v6 store, fully typed and console‑quiet:
 
 ```ts
 import { makeInMemoryStore } from '@nexvradev/next-bails'
@@ -773,16 +773,16 @@ It listens to `messaging-history.set`, `chats.*`, `contacts.*`, `messages.*`, `g
 
 ### `sock.findUserId()`
 
-Resolve the linked **PN** (`â€¦@s.whatsapp.net`) and **LID** (`â€¦@lid`) of a user from either representation â€” the missing side is `undefined` until the mapping is known locally:
+Resolve the linked **PN** (`…@s.whatsapp.net`) and **LID** (`…@lid`) of a user from either representation — the missing side is `undefined` until the mapping is known locally:
 
 ```ts
 const { phoneNumber, lid } = await sock.findUserId('43411111111111@lid')
-// â†’ { phoneNumber: '6281111111111@s.whatsapp.net', lid: '43411111111111@lid' } (when resolvable)
+// → { phoneNumber: '6281111111111@s.whatsapp.net', lid: '43411111111111@lid' } (when resolvable)
 ```
 
 ### `sock.newsletterSubscribed()`
 
-Fetch every newsletter (channel) the account is subscribed to â€” the newsletter analogue of `groupFetchAllParticipating()`:
+Fetch every newsletter (channel) the account is subscribed to — the newsletter analogue of `groupFetchAllParticipating()`:
 
 ```ts
 const newsletters = await sock.newsletterSubscribed()
@@ -791,13 +791,13 @@ for (const nl of newsletters) console.log(nl.id, nl.name)
 
 ### Intentionally not implemented
 
-To keep the fork lean and honest, some niche itsliaaa/baileys features are **not** ported (state your case in an issue if you need them): payment messages (`requestPaymentFrom`, `orderText`, `invoiceNote`), stickerâ€‘pack sending, `richResponseMessage`/codeâ€‘block/table/inlineâ€‘entity reply formatting, poll *result/quiz* send helpers, keepâ€‘chat extras, and flowâ€‘reply convenience wrappers. Everything needed to build those payloads yourself (`raw`, `additionalNodes`, full WAProto exposure) is available.
+To keep the fork lean and honest, some niche itsliaaa/baileys features are **not** ported (state your case in an issue if you need them): payment messages (`requestPaymentFrom`, `orderText`, `invoiceNote`), sticker‑pack sending, `richResponseMessage`/code‑block/table/inline‑entity reply formatting, poll *result/quiz* send helpers, keep‑chat extras, and flow‑reply convenience wrappers. Everything needed to build those payloads yourself (`raw`, `additionalNodes`, full WAProto exposure) is available.
 
 ---
 
 ## Receiving messages
 
-Every incoming message arrives in `messages.upsert` as a `proto.WebMessageInfo`. Parse it safely with the builtâ€‘in helpers (these are **not hardcoded switches** â€” they read the schema keys, so future types work automatically):
+Every incoming message arrives in `messages.upsert` as a `proto.WebMessageInfo`. Parse it safely with the built‑in helpers (these are **not hardcoded switches** — they read the schema keys, so future types work automatically):
 
 ```ts
 import { getContentType, normalizeMessageContent, extractMessageContent, getMessageTypeInfo } from '@nexvradev/next-bails'
@@ -816,22 +816,22 @@ sock.ev.on('messages.upsert', ({ messages }) => {
 })
 ```
 
-Download media reuploadable? Use `downloadMediaMessage` for saved messages, and reâ€‘upload with `sock.updateMediaMessage`.
+Download media reuploadable? Use `downloadMediaMessage` for saved messages, and re‑upload with `sock.updateMediaMessage`.
 
 ---
 
 ## Message-type coverage
 
-This library serializes, parses and detects **every message type in the current WhatsApp protocol schema** (`WAProto.proto`), which is the source of truth â€” not a handâ€‘maintained list. That includes, and is not limited to:
+This library serializes, parses and detects **every message type in the current WhatsApp protocol schema** (`WAProto.proto`), which is the source of truth — not a hand‑maintained list. That includes, and is not limited to:
 
-`conversation`, `extendedTextMessage`, `imageMessage`, `videoMessage`, `audioMessage`, `documentMessage`, `stickerMessage`, `contactMessage`, `contactsArrayMessage`, `locationMessage`, `liveLocationMessage`, `reactionMessage`, `pollCreationMessage`, `pollUpdateMessage`, `pollResultSnapshotMessage`, `listMessage`, `listResponseMessage`, `buttonsMessage`, `buttonsResponseMessage`, `templateMessage`, `templateButtonReplyMessage`, `interactiveMessage` (incl. `nativeFlowMessage`, `carouselMessage`, `shopStorefrontMessage`, `collectionMessage`), `viewOnceMessage`, `viewOnceMessageV2`, `viewOnceMessageV2Extension`, `ephemeralMessage`, `spoilerMessage`, `lottieStickerMessage`, `groupStatusMessageV2`, `editedMessage`, `protocolMessage`, `senderKeyDistributionMessage`, `requestPhoneNumberMessage`, `productMessage` (catalogs), `orderMessage` (order requests), `paymentInviteMessage`, `invoiceMessage`, `eventMessage`, `groupInviteMessage`, `newsletterAdminInviteMessage`, `keepInChatMessage`, `pinInChatMessage`, `scheduledCallCreationMessage`, `albumMessage`, `documentWithCaptionMessage`, `statusMentionMessage`, â€¦(plus system/systemâ€‘message fields like `call`, `chat`, `messageContextInfo`, `messageHistoryNotice`, `callLogMesssage`, â€¦).
+`conversation`, `extendedTextMessage`, `imageMessage`, `videoMessage`, `audioMessage`, `documentMessage`, `stickerMessage`, `contactMessage`, `contactsArrayMessage`, `locationMessage`, `liveLocationMessage`, `reactionMessage`, `pollCreationMessage`, `pollUpdateMessage`, `pollResultSnapshotMessage`, `listMessage`, `listResponseMessage`, `buttonsMessage`, `buttonsResponseMessage`, `templateMessage`, `templateButtonReplyMessage`, `interactiveMessage` (incl. `nativeFlowMessage`, `carouselMessage`, `shopStorefrontMessage`, `collectionMessage`), `viewOnceMessage`, `viewOnceMessageV2`, `viewOnceMessageV2Extension`, `ephemeralMessage`, `spoilerMessage`, `lottieStickerMessage`, `groupStatusMessageV2`, `editedMessage`, `protocolMessage`, `senderKeyDistributionMessage`, `requestPhoneNumberMessage`, `productMessage` (catalogs), `orderMessage` (order requests), `paymentInviteMessage`, `invoiceMessage`, `eventMessage`, `groupInviteMessage`, `newsletterAdminInviteMessage`, `keepInChatMessage`, `pinInChatMessage`, `scheduledCallCreationMessage`, `albumMessage`, `documentWithCaptionMessage`, `statusMentionMessage`, …(plus system/system‑message fields like `call`, `chat`, `messageContextInfo`, `messageHistoryNotice`, `callLogMesssage`, …).
 
-Attributeâ€‘style types are carried through `contextInfo` and preserved losslessly:
+Attribute‑style types are carried through `contextInfo` and preserved losslessly:
 
-- **Quoted replies** â†’ `contextInfo.quotedMessage` + `stanzaId`/`participant`.
-- **Forwarded messages** â†’ `contextInfo.isForwarded`, `forwardingScore`.
+- **Quoted replies** → `contextInfo.quotedMessage` + `stanzaId`/`participant`.
+- **Forwarded messages** → `contextInfo.isForwarded`, `forwardingScore`.
 
-Deep dive: [`docs/MESSAGE-TYPES.md`](./docs/MESSAGE-TYPES.md) Â· Tests: [`test/message-types.test.mjs`](./test/message-types.test.mjs)
+Deep dive: [`docs/MESSAGE-TYPES.md`](./docs/MESSAGE-TYPES.md) · Tests: [`test/message-types.test.mjs`](./test/message-types.test.mjs)
 
 ---
 
@@ -839,15 +839,15 @@ Deep dive: [`docs/MESSAGE-TYPES.md`](./docs/MESSAGE-TYPES.md) Â· Tests: [`test
 
 Subscribe on the socket's event bus (`sock.ev`). All events are exported in the `BaileysEventMap` type.
 
-| Event                          | Fires when â€¦                                                       |
+| Event                          | Fires when …                                                       |
 | ------------------------------ | ------------------------------------------------------------------ |
 | `connection.update`            | connection state changes (`open` / `connecting` / `close`, `qr`)   |
-| `creds.update`                 | auth state changes â†’ persist with `saveCreds`                      |
+| `creds.update`                 | auth state changes → persist with `saveCreds`                      |
 | `messaging-history.set`        | initial sync history chunks arrive (chats/contacts/messages)       |
 | `chats.upsert`/`.update`/`.delete` | chat list changes                                            |
 | `presence.update`              | a user's presence changes (online / typing / recording)            |
 | `contacts.upsert`/`.update`    | contacts added/updated                                             |
-| `messages.upsert`              | **new messages** (most important) â€” types: `notify`, `append`, `replace` |
+| `messages.upsert`              | **new messages** (most important) — types: `notify`, `append`, `replace` |
 | `messages.update`              | message state/flags change (sent/delivered/read)                   |
 | `messages.reaction`            | reactions to a message                                             |
 | `message-receipt.update`       | read/delivery receipts                                             |
@@ -860,9 +860,9 @@ Subscribe on the socket's event bus (`sock.ev`). All events are exported in the 
 
 **Tips**
 
-- `messages.upsert` payload: `{ messages, type, date? }`. Filter `type === 'notify'` for realâ€‘time messages; `append`/`replace` are history sync.
-- Enable the â€œreceive notifications on your own phoneâ€ pairing by setting `markOnlineOnConnect: true` (older note) or by the default mobile companion flags.
-- For highâ€‘throughput bots, subscribe to events once at startup, validate payloads with `isWAMessage`, and process async work off the hot path (see [Performance](#performance-recommendations)).
+- `messages.upsert` payload: `{ messages, type, date? }`. Filter `type === 'notify'` for real‑time messages; `append`/`replace` are history sync.
+- Enable the “receive notifications on your own phone” pairing by setting `markOnlineOnConnect: true` (older note) or by the default mobile companion flags.
+- For high‑throughput bots, subscribe to events once at startup, validate payloads with `isWAMessage`, and process async work off the hot path (see [Performance](#performance-recommendations)).
 
 ---
 
@@ -873,7 +873,7 @@ const sock = makeWASocket({
   version,                         // WA Web version (see fetchLatestBaileysVersion)
   auth: state,                     // from useMultiFileAuthState
   printQRInTerminal: true,
-  browser: ['chaeulso', 'Chrome', '1.0.0'],  // or Browsers.ubuntu('Chrome')
+  browser: ['Next-Bails', 'Chrome', '1.0.0'],  // or Browsers.ubuntu('Chrome')
   logger                         // a pino logger; defaults to a child of the default
 })
 
@@ -896,25 +896,25 @@ makeWASocket({
 
 Key options (full list in `SocketConfig`): `waWebSocketUrl`, `connectTimeoutMs`, `defaultQueryTimeoutMs`, `keepAliveIntervalMs`, `mobile`, `agent`, `version`, `browser`, `pushName`, `fetchAgent`, `printQRInTerminal`, `emitOwnEvents`, `maxMsgRetryCount`, `qrTimeout`, `auth`, `markOnlineOnConnect`, `transactionOpts`, `shouldSyncHistoryMessage`.
 
-Turn off timeouts entirely when you need ultraâ€‘long pending queries: `defaultQueryTimeoutMs: undefined`.
+Turn off timeouts entirely when you need ultra‑long pending queries: `defaultQueryTimeoutMs: undefined`.
 
 ---
 
 ## Reliability & error handling
 
-`@nexvradev/next-bails` is hardened for longâ€‘running bots:
+`@nexvradev/next-bails` is hardened for long‑running bots:
 
-- **Graceful reconnects** â€” handle `connection.update` + `DisconnectReason`, or let
+- **Graceful reconnects** — handle `connection.update` + `DisconnectReason`, or let
   [`createReconnectManager()`](#connection-reliability-v740) own the policy for you.
-- **Version never regresses** â€” [`resolveWaWebVersion()`](#connection-reliability-v740)
-  keeps reconnects off the staleâ€‘version `408` treadmill.
-- **Message retry manager** â€” `maxMsgRetryCount`/`retryRequestDelayMs`; `decryptPollVote` for pending poll votes.
-- **Event buffering** â€” events are buffered & flushed atomically for consistent ordering during history sync.
-- **Defensive parsing** â€” malformed packets fail loudly, never hang/crash the process.
-- **Validated API** â€” `isWAMessage` / `sanitizeIncomingMessage` filter junk packets.
-- **No unhandled rejections helpers** â€” `withTimeout`, `withRetry`, `settle`, `safeAllSettled`.
+- **Version never regresses** — [`resolveWaWebVersion()`](#connection-reliability-v740)
+  keeps reconnects off the stale‑version `408` treadmill.
+- **Message retry manager** — `maxMsgRetryCount`/`retryRequestDelayMs`; `decryptPollVote` for pending poll votes.
+- **Event buffering** — events are buffered & flushed atomically for consistent ordering during history sync.
+- **Defensive parsing** — malformed packets fail loudly, never hang/crash the process.
+- **Validated API** — `isWAMessage` / `sanitizeIncomingMessage` filter junk packets.
+- **No unhandled rejections helpers** — `withTimeout`, `withRetry`, `settle`, `safeAllSettled`.
 
-Builtâ€‘in resilience helpers (new in this fork):
+Built‑in resilience helpers (new in this fork):
 
 ```ts
 import { withTimeout, withRetry, settle } from '@nexvradev/next-bails'
@@ -938,13 +938,13 @@ Common disconnect reasons (`DisconnectReason`): `loggedOut` (clear session!), `t
 
 ## Performance recommendations
 
-- **Cache group metadata** â€” use `groupMetadataCache`/`cacheGroupMetadata` where a lot of group traffic exists, to avoid reâ€‘querying group info (`groupMetadata(jid)`) for every incoming message.
+- **Cache group metadata** — use `groupMetadataCache`/`cacheGroupMetadata` where a lot of group traffic exists, to avoid re‑querying group info (`groupMetadata(jid)`) for every incoming message.
 - **Pin the WhatsApp Web version** (`version` from `fetchLatestBaileysVersion`) and refresh it periodically; mismatched versions cause disconnects.
-- **Tune timeouts** â€” `defaultQueryTimeoutMs` and `keepAliveIntervalMs` as appropriate; disable query timeout for long polls.
-- **Persist creds immediately** on every `creds.update` to avoid missing preâ€‘keys (decryption failures).
-- **Buffer history sync** â€” defer heavy work until `messaging-history.set` completes; store only what you need.
-- **Use the resilience helpers** â€” bound crossâ€‘chat operations with `withTimeout`, and batch with `settle` to avoid piling work on the WS event loop.
-- **Do less on the hot path** â€” outâ€‘ofâ€‘process media transcoding, and keep `messages.upsert` handlers nonâ€‘blocking.
+- **Tune timeouts** — `defaultQueryTimeoutMs` and `keepAliveIntervalMs` as appropriate; disable query timeout for long polls.
+- **Persist creds immediately** on every `creds.update` to avoid missing pre‑keys (decryption failures).
+- **Buffer history sync** — defer heavy work until `messaging-history.set` completes; store only what you need.
+- **Use the resilience helpers** — bound cross‑chat operations with `withTimeout`, and batch with `settle` to avoid piling work on the WS event loop.
+- **Do less on the hot path** — out‑of‑process media transcoding, and keep `messages.upsert` handlers non‑blocking.
 
 Full guide: [`docs/PERFORMANCE.md`](./docs/PERFORMANCE.md)
 
@@ -952,7 +952,7 @@ Full guide: [`docs/PERFORMANCE.md`](./docs/PERFORMANCE.md)
 
 ## Migration from `@whiskeysockets/baileys`
 
-Dropâ€‘in replacement â€” change the import/require, nothing else for most users:
+Drop‑in replacement — change the import/require, nothing else for most users:
 
 ```diff
 - import makeWASocket from '@whiskeysockets/baileys'
@@ -964,18 +964,18 @@ Dropâ€‘in replacement â€” change the import/require, nothing else for 
 + const { default: makeWASocket } = require('@nexvradev/next-bails')
 ```
 
-Notable deltas (all nonâ€‘breaking):
+Notable deltas (all non‑breaking):
 
 | Area                  | What changed                                                                     |
 | --------------------- | -------------------------------------------------------------------------------- |
-| **Package name**      | `@whiskeysockets/baileys` â†’ `@nexvradev/next-bails`                                   |
-| **CJS support**       | ðŸ‡³ðŸ‡´ Works in plain Node via `require()` (dual build) â€” upstream v7 was ESMâ€‘only    |
-| **libsignal**         | Uses the **published** `libsignal@^6` (no git URL) â†’ reproducible installs       |
+| **Package name**      | `@whiskeysockets/baileys` → `@nexvradev/next-bails`                                   |
+| **CJS support**       | 🇳🇴 Works in plain Node via `require()` (dual build) — upstream v7 was ESM‑only    |
+| **libsignal**         | Uses the **published** `libsignal@^6` (no git URL) → reproducible installs       |
 | **dotenv**            | Removed (unused at runtime); set env vars yourself if you used it                 |
 | **Types**             | Complete `.d.ts` shipped; `tsc --strict` passes                                    |
 | **Reliability**       | New `withTimeout`/`withRetry`/`settle`/`isWAMessage`/`getMessageTypeInfo` helpers |
-| **Version**           | This package starts at `7.1.0` (base: upstream `7.0.0â€‘rc13`, MIT)                 |
-| **Connection**        | `createReconnectManager()`, `resolveWaWebVersion()`, neverâ€‘downgrading `fetchLatestWaWebVersion()` |
+| **Version**           | This package starts at `7.1.0` (base: upstream `7.0.0‑rc13`, MIT)                 |
+| **Connection**        | `createReconnectManager()`, `resolveWaWebVersion()`, never‑downgrading `fetchLatestWaWebVersion()` |
 | **Pairing**           | `normalizePairingPhoneNumber()`, `makePairingQRRenderer()`, `handleCompanionRegRefresh()`, `requestPairingCode(phone, code, { defaultCountryCode })` |
 
 Details: [`docs/MIGRATION.md`](./MIGRATION.md)
@@ -988,9 +988,9 @@ Details: [`docs/MIGRATION.md`](./MIGRATION.md)
 npm install
 
 npm run build        # rebuild lib/index.cjs from the ESM source (esbuild), validated
-npm run typecheck    # tsc --noEmit â€” 0 errors
-npm run lint         # eslint â€” 0 errors
-npm test             # node --test test/ â€” 144 offline tests (no network)
+npm run typecheck    # tsc --noEmit — 0 errors
+npm run lint         # eslint — 0 errors
+npm test             # node --test test/ — 144 offline tests (no network)
 npm run typecheck    # 0 errors
 npm run lint         # 0 errors
 npm run build        # dual ESM/CJS bundle, export parity checked
@@ -1011,15 +1011,14 @@ Every PR should keep **all four checks green** and must not regress the public A
 ## Security & disclaimer
 
 - This project is **not affiliated with WhatsApp or Meta**. Use at your own risk; excessive automation may violate WhatsApp ToS and get numbers banned.
-- Never commit your `auth_info*` folders or session JSON â€” they are full account credentials.
+- Never commit your `auth_info*` folders or session JSON — they are full account credentials.
 - Keep dependencies updated (`npm audit`).
 
 ## License & attribution
 
-MIT Â© **chaeul.so** â€” see [`LICENSE`](./LICENSE).
+MIT © **chaeul.so** — see [`LICENSE`](./LICENSE).
 
-Based on **[Baileys](https://github.com/WhiskeySockets/Baileys)** by Rajeh Taher (WhiskeySockets) and the original project at `github.com/adiwajshing/Baileys`, MIT Â© 2025. Runtime derived from `7.0.0-rc13`, kept in sync with upstream `7.0.0-rc14` and
+Based on **[Baileys](https://github.com/WhiskeySockets/Baileys)** by Rajeh Taher (WhiskeySockets) and the original project at `github.com/adiwajshing/Baileys`, MIT © 2025. Runtime derived from `7.0.0-rc13`, kept in sync with upstream `7.0.0-rc14` and
 `master`; this fork preserves the public API and adds packaging, typing,
 hardening, connection/pairing fixes, tests and docs.
 Upstream fixes ported here are credited in [`docs/BUGFIXES.md`](./docs/BUGFIXES.md).
-
